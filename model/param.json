@@ -1,0 +1,12 @@
+{
+  "batch_size": 16,
+  "img_width": 224,
+  "img_height": 224,
+  "img_size": 224,
+  "grid_size": 28,
+  "load_url": "./IGMedSeg.pt",
+  "train": {
+    "lr": 0.001,
+    "weight_decay": 1e-4
+  }
+}

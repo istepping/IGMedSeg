@@ -10,7 +10,6 @@ import time
 import matplotlib.pyplot as plt
 import model.util as util
 from model.gcn import GCN
-from model.gcn_fc import GCN_FC
 import os
 
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
@@ -21,12 +20,7 @@ class InterSeg:
         print("InterSeg-init")
         self.normalizer = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         self.in_channels = in_channels
-        if fc:
-            print("initial GCN_FC")
-            self.model = GCN_FC(in_channels=self.in_channels)
-        else:
-            print("initial GCN")
-            self.model = GCN(in_channels=self.in_channels)
+        self.model = GCN(in_channels=self.in_channels)
         self.param = json.load(open(r"../model/param.json"))
         if load_model and os.path.exists(self.param["load_url"]):
             print("==>load model from {}".format(self.param["load_url"]))

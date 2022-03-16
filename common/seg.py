@@ -1,12 +1,6 @@
-"""
-@Time 2020/3/2
-@Author Rocky
-@Note 分割相关变量
-"""
 from model.inter_seg import InterSeg
-import cv2
 
-MODEL = InterSeg(sgd=True, load_model=True, show_loss=False, in_channels=2, fc=False)
+MODEL = InterSeg(sgd=True, load_model=False, show_loss=False, in_channels=2, fc=False)
 
 OPERATION_IMG = 0  # 加载图像阶段
 OPERATION_PRE = 1  # 图像与分割阶段
@@ -17,7 +11,7 @@ ORIGIN_IMAGE_SIZE = []  # 记录图片大小
 
 IMAGE_NAME = []  # 记录文件名
 
-# MedSeg
+# IGMedSeg
 INITIAL_POINTS = []  # 记录初始交互点
 INIT_CONTROL_POS = []  # 原始坐标点位置
 CONTROL_POS = []  # 控制点集合

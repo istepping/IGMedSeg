@@ -17,7 +17,7 @@ def main():
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
-                MODEL.save()
+                # MODEL.save()
                 exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if BUTTON1[0][0] <= event.pos[0] <= BUTTON1[0][1] and BUTTON1[1][0] <= event.pos[1] <= BUTTON1[1][1]:

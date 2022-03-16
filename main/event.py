@@ -1,22 +1,15 @@
-"""
-@Time 2020/2/23
-@Author Rocky
-@Note 事件响应
-"""
 import json
 import os
 import tkinter.filedialog
-import cv2
-import numpy as np
+
 import pygame
 
-import utils.metric as metric
+import utils.calc_util as calc_util
 import utils.screen_draw as screen_draw
 import utils.util as util
 from common.common import *
-import utils.calc_util as calc_util
 
-MODEL = InterSeg(sgd=True, load_model=False, show_loss=False, in_channels=4, fc=False)
+
 def button1(screen):
     print("1选择示例")
     util.init_seg()

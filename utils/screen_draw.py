@@ -1,8 +1,3 @@
-"""
-@Time 2020/2/20
-@Author Rocky
-@Note 界面显示辅助函数
-"""
 import pygame
 import cv2
 from common.common import *
@@ -71,7 +66,7 @@ def init_screen(screen):
     # 显示图片作为背景,显示图片和坐标,划线设计布局
     screen.blit(background_image, (0, 0))
     # 标题
-    text(screen, (400, 20), "A real-time interactive and learning method for medical image segmentation", 18, (0, 0, 255))
+    text(screen, (400, 20), "An Efficient Interactive Segmentation Framework for Medical Images Without Pre-Training", 18, (0, 0, 255))
     # 设置控件
     pygame.draw.line(screen, (255, 0, 0), (0, 50), (800, 50), 1)
     pygame.draw.line(screen, (255, 0, 0), (600, 50), (600, 550), 1)

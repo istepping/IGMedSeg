@@ -4,18 +4,18 @@
 @Note 工具包
 """
 
+import math
+
 import numpy as np
 import pygame
 import torch
 from PIL import Image
 from geomdl import fitting
-import os
-import utils.metric as metric
-import json
+import cv2
+
 import utils.screen_draw as screen_draw
 from common.common import *
 from model.snake import Snake
-import math
 
 
 # 初始化新的分割任务

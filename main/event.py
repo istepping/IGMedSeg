@@ -73,7 +73,7 @@ def button4(screen, current_img):
         INIT_CONTROL_POS.append(contour[i])
         CONTROL_POS.append(contour[i])
     screen_draw.show_and_cal(screen, current_img, contour, CONTROL_POS.copy())
-    print("control_pos_num=", len(CONTROL_POS))
+    # print("control_pos_num=", len(CONTROL_POS))
 
 
 # 进行进一步交互式分割
@@ -143,7 +143,6 @@ def get_end_point(screen, current_img, pos):
         CONTROL_POS[index] = [CONTROL_POS[index][0] + int(shift_x.item()),
                               CONTROL_POS[index][1] + int(shift_y.item())]
     contour = util.fit_b_spline_with_geomdl(CONTROL_POS.copy(), interpolate=True)
-    print("交互结果")
     screen_draw.show_and_cal(screen, current_img, contour, CONTROL_POS.copy())
 
 

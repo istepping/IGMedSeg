@@ -16,7 +16,7 @@ os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 
 
 class InterSeg:
-    def __init__(self, load_model=True, verbose=True, sgd=True, show_loss=False, in_channels=4, fc=False):
+    def __init__(self, load_model=True, verbose=False, sgd=True, show_loss=False, in_channels=4, fc=False):
         print("InterSeg-init")
         self.normalizer = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         self.in_channels = in_channels
@@ -56,7 +56,7 @@ class InterSeg:
         # 训练,和预测
         loss_list = []
         step_list = []
-        output_list = []  # 记录所有输出,输出loss最小的输出
+        output_list = []
         self.model.train()
         time1 = time.time()
         # train

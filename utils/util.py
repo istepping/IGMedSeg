@@ -1,9 +1,3 @@
-"""
-@Time 2020/3/13
-@Author Rocky
-@Note 工具包
-"""
-
 import math
 
 import numpy as np
@@ -58,9 +52,6 @@ def exclude_re_points(control_pos):
 
 
 def exclude_points(control_pos):
-    """
-    排除异常点, 修改CONTROL_POS值
-    """
     for i, point in enumerate(control_pos):
         dist1 = calc_distance(point, control_pos[(i - 1) % len(control_pos)])
         dist2 = calc_distance(point, control_pos[(i + 1) % len(control_pos)])
@@ -70,25 +61,9 @@ def exclude_points(control_pos):
             print("=>exclude point=", point)
 
 
-def snake(current_img, screen, control_pos, iter_num=20, closed=True, show=True, search_kernel_size=7):
-    img = pygame_to_cv(current_img)
-    sk = Snake(img, closed=closed, points=control_pos, search_kernel_size=search_kernel_size)
-    for i in range(iter_num):
-        sk.step()
-        # np.array(sk.points).tolist()
-        if show:
-            contour = fit_b_spline_with_geomdl(np.array(sk.points).tolist().copy(), interpolate=INTERPOLATE)
-            screen_draw.show_and_cal(screen, current_img, contour, sk.points.copy())
-
-    return np.array(sk.points)
-
-
 def auto_generate_control_pos(contour, control_pos, point, s=10, k=2):
     index = get_near_control_pos(contour, point)
-    # 以contour[index]为中心, 以s为步长周围采样k个拓展点, 并且存储到control_pos中: 使用删除的思路删除步长内部的控制点
     indexes = []
-    # 以删除的思路, 从idx左侧到idx范围中间删除,右侧遍历到 K+1
-    # 多索引删除操作,注意list大小变化: 方法: 记录删除索引, 按照索引生成新的list(不含有旧的索引),
     for i in range(-k, k + 2):
         idx = (index + i * s) % len(contour)
         left = (index + (i - 1) * s) % len(contour)
@@ -327,34 +302,6 @@ def calc_contour_distance(contour, point):
     return abs(round(dist, 2))
 
 
-# 初始轮廓拟合
-def get_convexHull_from_initial_points(points, image_size):
-    contour = np.array(points)
-    hull = cv2.convexHull(contour)
-    hull = shrink_polygon(hull.squeeze(1), -0.6)
-    hull = hull[:, np.newaxis, :]
-    img = np.zeros((image_size[0], image_size[1]), dtype=np.uint8)
-    cv2.polylines(img, [hull], color=(255, 255, 255), isClosed=True, thickness=1)  # cnt外加上[]才能形成多边形
-    # cv_img_show(img)
-    contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, APPROX)
-    contour = contours[0].squeeze()
-    return contour
-
-
-def get_ellipse_from_initial_points(points, image_size):
-    contour = np.array(points)
-    img = np.zeros((image_size[0], image_size[1]), dtype=np.uint8)
-    box = cv2.boundingRect(contour)
-    ellipse = cv2.fitEllipse(box)
-    # cv2.minAreaRect(contour) 最小矩形,cv2.boundingRect(contour) 正矩形
-    cv2.ellipse(img, ellipse, color=(255, 255, 255), thickness=1)
-    # cv2.polylines(img, ellipse, color=(255, 255, 255), isClosed=True,lineType=1)
-    # [参数设置](https://blog.csdn.net/hjxu2016/article/details/77833336/) cv2.CHAIN_APPROX_NONE,cv2.CHAIN_APPROX_SIMPLE
-    contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, APPROX)
-    contour = contours[0].squeeze()
-    # print(contour)
-    return contour
-
 
 # 面积
 def Area(polygon: np.array):
@@ -416,37 +363,6 @@ def shrink_polygon(polygon: np.array, r):
     return np.asarray(shrinked_polygon, dtype=np.int32)
 
 
-# box->　生成拟合椭圆
-def get_ellipse_from_box(box, image_size):
-    # cnt = np.array(box)
-    if len(INITIAL_POINTS) > 4:
-        # 使用点集合拟合
-        cnt = np.array(INITIAL_POINTS)
-    else:
-        points = []
-        # 矩形框采样形成轮廓->
-        for x in range(box[0][0], box[1][0], 2):
-            points.append([x, box[0][1]])
-        for y in range(box[0][1], box[1][1], 2):
-            points.append([box[1][0], y])
-        for x in reversed(range(box[0][0], box[1][0], 2)):
-            points.append([x, box[1][1]])
-        for y in reversed(range(box[0][1], box[1][1], 2)):
-            points.append([box[0][0], y])
-        cnt = np.array(points)
-    # ellipse = cv2.approxPolyDP(cnt, epsilon=15, closed=True)
-    # ellipse = cv2.fitEllipse(cnt)
-    ellipse = cv2.fitEllipse(cnt)
-    # 获取椭圆坐标
-    img = np.zeros((image_size[0], image_size[1]), dtype=np.uint8)
-    cv2.ellipse(img, ellipse, (255, 255, 255), 1)
-    # cv_img_show(img)
-    # cv2.polylines(img, ellipse, color=(255, 255, 255), isClosed=True,lineType=1)
-    # [参数设置](https://blog.csdn.net/hjxu2016/article/details/77833336/) cv2.CHAIN_APPROX_NONE,cv2.CHAIN_APPROX_SIMPLE
-    contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, APPROX)
-    contour = contours[0].squeeze()
-    # print(contour)
-    return contour
 
 
 # initial points-> 生成bounding box
@@ -556,8 +472,3 @@ def get_interactive_seg_input2(control_pos, start_index, point, link_range=1):
     return inter_index, torch.tensor(input_points, dtype=torch.long), torch.tensor(labels,
                                                                                    dtype=torch.float), torch.tensor(
         train_idx, dtype=torch.long)
-
-
-if __name__ == '__main__':
-    # get_concexHull_from_initial_points([[0, 0], [10, 10], [10, 11]])
-    print("")

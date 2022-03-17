@@ -1,7 +1,7 @@
+import math
+
 import torch
 import torch.nn as nn
-import torch.nn.functional as f
-import math
 from torch.nn import init
 from torch.nn.parameter import Parameter
 
@@ -17,16 +17,13 @@ class GCN(nn.Module):
         self.conv2 = nn.Conv2d(in_channels=16, out_channels=32, kernel_size=(3, 3))
         self.conv3 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=(3, 3))
         self.conv4 = nn.Conv2d(in_channels=32, out_channels=64, kernel_size=(1, 1))
-        in_features = 64 * 2 * 2  # 32 * 6 * 6, 64 * 2 * 2
+        in_features = 64 * 2 * 2
         self.gcn1 = GraphConvolution(in_features, in_features // 4)
         self.gcn2 = GraphConvolution(in_features // 4, in_features // 8)
         self.gcn3 = GraphConvolution(in_features // 8, out_features)
         self.relu = nn.ReLU(inplace=True)
-        # self.initNetParams()
 
     def forward(self, x, adj):
-        # print("GCN-forward") # 9*4*32*32
-        # print("input=",x.shape)
         x = self.relu(self.conv1(x))
         x = self.max_pool(x)  # 9*16*15*15
         x = self.relu(self.conv2(x))
@@ -69,7 +66,6 @@ class GraphConvolution(nn.Module):
 
     def forward(self, x, adj):
         # print("GraphConvolution-forward")
-        # 传播规则:AHW+B
         output = torch.mm(adj, x)
         output = torch.mm(output, self.weight)
         output = output + self.bias

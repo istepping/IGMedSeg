@@ -24,8 +24,7 @@ def main():
                     current_img = e.button1(screen)
                     operation = OPERATION_MODIFY
                 if BUTTON2[0][0] <= event.pos[0] <= BUTTON2[0][1] and BUTTON2[1][0] <= event.pos[1] <= BUTTON2[1][1]:
-                    current_img = e.button2(screen, current_img)
-                    operation = OPERATION_MODIFY
+                    current_img, operation = e.button2(screen, current_img)
                 if BUTTON3[0][0] <= event.pos[0] <= BUTTON3[0][1] and BUTTON3[1][0] <= event.pos[1] <= BUTTON3[1][1]:
                     e.button3(screen, current_img)
                     operation = OPERATION_PRE
@@ -38,7 +37,7 @@ def main():
                         event.pos[1] <= BUTTON5[1][1]:
                     e.button5(screen)
 
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN and (operation == OPERATION_PRE or operation == OPERATION_MODIFY):
                 if operation == OPERATION_PRE:
                     e.get_initial_interactive_point(screen, pygame.mouse.get_pos())
                 else:

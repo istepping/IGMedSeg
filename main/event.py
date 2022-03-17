@@ -40,7 +40,6 @@ def button2(screen, current_img):
         screen.blit(image, IMAGE_POS)
         util.init_seg()
         ORIGIN_IMAGE_SIZE.append([image.get_rect()[-2], image.get_rect()[-1]])
-        print(file_path.split("/")[-1][:-4])
         IMAGE_NAME.append(file_path.split("/")[-1][:-4])
         IMAGE_PATH.append(file_path)
         GT_JSON_PATH.append(os.path.dirname(file_path)[
@@ -50,8 +49,9 @@ def button2(screen, current_img):
             poly = json.load(open(f"{GT_JSON_PATH[-1]}"))["polys"][0]["poly"]
             INITIAL_POINTS.extend(calc_util.calc_extreme_points(poly))
             button4(screen, image)
-        return image
-    return current_img
+            return image, OPERATION_MODIFY
+        return image, OPERATION_PRE
+    return current_img, OPERATION_PRE
 
 
 def button3(screen, current_img):
@@ -69,7 +69,7 @@ def button4(screen, current_img):
         return
     contour = util.fit_b_spline_with_geomdl(INITIAL_POINTS.copy(), interpolate=True)
 
-    for i in range(0, len(contour), 9):
+    for i in range(0, len(contour), SAMPLING_STEP):
         INIT_CONTROL_POS.append(contour[i])
         CONTROL_POS.append(contour[i])
     screen_draw.show_and_cal(screen, current_img, contour, CONTROL_POS.copy())
@@ -85,7 +85,7 @@ def get_interactive_point(screen, current_img, pos):
                                                                                             INTERACTIVE_POINT[
                                                                                                 -1], link_range=4)
         output = MODEL.refine_seg(CONTROL_POS, util.get_input_img(current_img), input_points, input_labels,
-                                  train_idx, epoch=10, part=True)
+                                  train_idx, epoch=20, part=True)
         for i, index in enumerate(inter_index):
             if i in train_idx:
                 shift_x, shift_y = input_labels[i]

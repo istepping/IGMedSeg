@@ -3,6 +3,7 @@ This is the official PyTorch implementation of our paper "An Efficient Interacti
 
 The demo video can be found in ./demo-video.mp4.
 ## some examples
+![](resource/demo0.gif)
 ![](resource/demo1.gif)
 ![](resource/demo2.gif)
 ## run the code

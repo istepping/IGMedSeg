@@ -1,6 +1,6 @@
 from model.inter_seg import InterSeg
 
-MODEL = InterSeg(sgd=True, load_model=False, show_loss=False, in_channels=2, fc=False)
+MODEL = InterSeg(sgd=True, load_model=False, show_loss=False, in_channels=4, fc=False)
 
 OPERATION_IMG = 0  # 加载图像阶段
 OPERATION_PRE = 1  # 图像与分割阶段
@@ -17,7 +17,7 @@ INIT_CONTROL_POS = []  # 原始坐标点位置
 CONTROL_POS = []  # 控制点集合
 IMAGE_PATH = []  # 分割图片路径
 GT_JSON_PATH = []  # 对应GT路径
-DEFAULT_DIR = [r"D:\datasets\PA\Image"]  # 默认打开文件路径
+DEFAULT_DIR = [r"/img"]  # 默认打开文件路径
 INTERACTIVE_POINT = []  # 交互点击点记录
 TRUE_CONTROL_INDEX = []  # 用户点击的确定的点对应的索引->都需不会被更改
 SHIFT_INDEX = []
@@ -31,3 +31,4 @@ VISION_ALL = 2
 # Param
 VISION_WAY = VISION_ALL
 SHOW_LOSS = False  # 显示Loss曲线
+SAMPLING_STEP = 6

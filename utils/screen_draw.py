@@ -81,6 +81,8 @@ def init_screen(screen):
     text(screen, (BUTTON_X + 50, BUTTON_Y + 190), "Done", 14, (139, 136, 120))
     screen.blit(button_image, (BUTTON_X, BUTTON_Y + 200))
     text(screen, (BUTTON_X + 50, BUTTON_Y + 240), "Finish", 14, (0, 255, 0))
+    screen.blit(button_image, (BUTTON_X, BUTTON_Y + 250))
+    text(screen, (BUTTON_X + 50, BUTTON_Y + 290), "Show", 14, (0, 0, 255))
     # 设置图片区域
     text(screen, (300, 300), "Image", 40, (139, 136, 120))
 

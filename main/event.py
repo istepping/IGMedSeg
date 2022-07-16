@@ -153,3 +153,15 @@ def modify(screen, pos, current_img):
     points.insert(SHIFT_INDEX[0], [x, y])
     contour = util.fit_b_spline_with_geomdl(points, interpolate=True)
     screen_draw.show_and_cal(screen, current_img, contour, points)
+
+
+def button6(screen, current_img):
+    if SHOW[0]:
+        screen.blit(current_img, IMAGE_POS)
+        screen_draw.draw_gt(screen)
+        SHOW.clear()
+        SHOW.append(False)
+    else:
+        screen.blit(current_img, IMAGE_POS)
+        SHOW.clear()
+        SHOW.append(True)

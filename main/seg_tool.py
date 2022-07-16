@@ -36,6 +36,10 @@ def main():
                         BUTTON5[0][1] and BUTTON5[1][0] <= \
                         event.pos[1] <= BUTTON5[1][1]:
                     e.button5(screen)
+                if (operation == OPERATION_VIEW or operation == OPERATION_MODIFY) and BUTTON6[0][0] <= event.pos[0] <= \
+                        BUTTON6[0][1] and BUTTON6[1][0] <= \
+                        event.pos[1] <= BUTTON6[1][1]:
+                    e.button6(screen,current_img)
 
             if event.type == pygame.MOUSEBUTTONDOWN and (operation == OPERATION_PRE or operation == OPERATION_MODIFY):
                 if operation == OPERATION_PRE:

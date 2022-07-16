@@ -16,10 +16,10 @@ def show_and_cal(screen, current_img, contour, control_pos):
     else:
         draw_multi_points(screen, current_img, control_pos, color=(255, 0, 0), clear=True)
         draw_pred_result(screen, current_img, contour, color=(255, 0, 0), clear=False)
-    # if os.path.exists(GT_JSON_PATH[-1]):
-    #     poly = json.load(open(f"{GT_JSON_PATH[-1]}"))["polys"][0]["poly"]  # GT
-        # print("多边形精度(IoU)=", metric.calc_iou_with_polygon(np.array(poly), np.array(control_pos)))
-        # print("样条曲线精度(IoU)=", metric.calc_iou_with_polygon(np.array(poly), np.array(contour)))
+    if os.path.exists(GT_JSON_PATH[-1]):
+        poly = json.load(open(f"{GT_JSON_PATH[-1]}"))["polys"][0]["poly"]  # GT
+        print("多边形精度(IoU)=", metric.calc_iou_with_polygon(np.array(poly), np.array(control_pos)))
+        print("样条曲线精度(IoU)=", metric.calc_iou_with_polygon(np.array(poly), np.array(contour)))
     pygame.display.update()
 
 

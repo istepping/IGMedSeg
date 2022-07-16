@@ -7,15 +7,15 @@ import os
 import utils.metric as metric
 
 
-def show_and_cal(screen, current_img, contour, control_pos):
+def show_and_cal(screen, current_img, contour, control_pos,show_gt=True):
     control_pos = control_pos.copy()
     if VISION_WAY == VISION_POINT:
-        draw_multi_points(screen, current_img, control_pos, color=(255, 0, 0), clear=True)
+        draw_multi_points(screen, current_img, control_pos, color=(255, 0, 0), clear=True, show_gt = show_gt)
     elif VISION_WAY == VISION_LINE:
-        draw_pred_result(screen, current_img, contour, color=(255, 0, 0), clear=True)
+        draw_pred_result(screen, current_img, contour, color=(255, 0, 0), clear=True, show_gt = show_gt)
     else:
-        draw_multi_points(screen, current_img, control_pos, color=(255, 0, 0), clear=True)
-        draw_pred_result(screen, current_img, contour, color=(255, 0, 0), clear=False)
+        draw_multi_points(screen, current_img, control_pos, color=(255, 0, 0), clear=True, show_gt = show_gt)
+        draw_pred_result(screen, current_img, contour, color=(255, 0, 0), clear=False, show_gt = show_gt)
     if os.path.exists(GT_JSON_PATH[-1]):
         poly = json.load(open(f"{GT_JSON_PATH[-1]}"))["polys"][0]["poly"]  # GT
         print("多边形精度(IoU)=", metric.calc_iou_with_polygon(np.array(poly), np.array(control_pos)))

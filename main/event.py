@@ -95,7 +95,7 @@ def get_interactive_point(screen, current_img, pos):
                                   CONTROL_POS[index][1] + int(shift_y.item())]
 
         contour = util.fit_b_spline_with_geomdl(CONTROL_POS.copy(), interpolate=True)
-        screen_draw.show_and_cal(screen, current_img, contour, CONTROL_POS.copy())
+        screen_draw.show_and_cal(screen, current_img, contour, CONTROL_POS.copy(), show_gt = False)
 
 
 def button5(screen):
@@ -143,7 +143,7 @@ def get_end_point(screen, current_img, pos):
         CONTROL_POS[index] = [CONTROL_POS[index][0] + int(shift_x.item()),
                               CONTROL_POS[index][1] + int(shift_y.item())]
     contour = util.fit_b_spline_with_geomdl(CONTROL_POS.copy(), interpolate=True)
-    screen_draw.show_and_cal(screen, current_img, contour, CONTROL_POS.copy())
+    screen_draw.show_and_cal(screen, current_img, contour, CONTROL_POS.copy(),show_gt=False)
 
 
 def modify(screen, pos, current_img):

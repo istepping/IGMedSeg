@@ -24,18 +24,18 @@ def show_and_cal(screen, current_img, contour, control_pos):
 
 
 # 绘制多边形结果
-def draw_pred_result(screen, current_img, points, color=(255, 0, 0), clear=True):
+def draw_pred_result(screen, current_img, points, color=(255, 0, 0), clear=True, show_gt = True):
     if clear:
         screen.blit(current_img, IMAGE_POS)
-        draw_gt(screen)
+        if show_gt: draw_gt(screen)
     draw_polygon(screen, points, color=color)
 
 
 # 绘制多个点
-def draw_multi_points(screen, current_img, points, color=(255, 0, 0), clear=True, r=2):
+def draw_multi_points(screen, current_img, points, color=(255, 0, 0), clear=True, r=2, show_gt = True):
     if clear:
         screen.blit(current_img, IMAGE_POS)
-        draw_gt(screen)
+        if show_gt: draw_gt(screen)
     for point in points:
         pos = [point[0] + IMAGE_POS[0], point[1] + IMAGE_POS[1]]
         pygame.draw.circle(screen, color, pos, r)
@@ -83,6 +83,8 @@ def init_screen(screen):
     text(screen, (BUTTON_X + 50, BUTTON_Y + 240), "Finish", 14, (0, 255, 0))
     screen.blit(button_image, (BUTTON_X, BUTTON_Y + 250))
     text(screen, (BUTTON_X + 50, BUTTON_Y + 290), "Show", 14, (0, 0, 255))
+    screen.blit(button_image, (BUTTON_X, BUTTON_Y + 300))
+    text(screen, (BUTTON_X + 50, BUTTON_Y + 340), "Show2", 14, (0, 0, 255))
     # 设置图片区域
     text(screen, (300, 300), "Image", 40, (139, 136, 120))
 

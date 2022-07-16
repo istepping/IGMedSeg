@@ -159,9 +159,28 @@ def button6(screen, current_img):
     if SHOW[0]:
         screen.blit(current_img, IMAGE_POS)
         screen_draw.draw_gt(screen)
+
         SHOW.clear()
         SHOW.append(False)
     else:
         screen.blit(current_img, IMAGE_POS)
+
+        SHOW.clear()
+        SHOW.append(True)
+
+
+def button7(screen, current_img):
+    if SHOW[0]:
+        screen_draw.draw_multi_points(screen, current_img, CONTROL_POS, color=(255, 0, 0), clear=True)
+        contour = util.fit_b_spline_with_geomdl(CONTROL_POS.copy(), interpolate=True)
+        screen_draw.draw_pred_result(screen, current_img, contour, color=(255, 0, 0), clear=False)
+
+        SHOW.clear()
+        SHOW.append(False)
+    else:
+        screen_draw.draw_multi_points(screen, current_img, CONTROL_POS, color=(255, 0, 0), clear=True, show_gt=False)
+        contour = util.fit_b_spline_with_geomdl(CONTROL_POS.copy(), interpolate=True)
+        screen_draw.draw_pred_result(screen, current_img, contour, color=(255, 0, 0), clear=False, show_gt=False)
+
         SHOW.clear()
         SHOW.append(True)

@@ -1,6 +1,6 @@
 from model.inter_seg import InterSeg
 
-MODEL = InterSeg(sgd=True, load_model=False, show_loss=True, in_channels=4, fc=False)
+MODEL = InterSeg(sgd=True, load_model=False, show_loss=False, in_channels=4, fc=False)
 
 OPERATION_IMG = 0  # 加载图像阶段
 OPERATION_PRE = 1  # 图像与分割阶段

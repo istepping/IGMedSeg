@@ -8,6 +8,7 @@ import utils.calc_util as calc_util
 import utils.screen_draw as screen_draw
 import utils.util as util
 from common.common import *
+from model.inter_seg import InterSeg
 
 
 def button1(screen):
@@ -78,6 +79,7 @@ def button4(screen, current_img):
 
 # 进行进一步交互式分割
 def get_interactive_point(screen, current_img, pos):
+    # MODEL = InterSeg(sgd=True, load_model=False, show_loss=True, in_channels=4, fc=False)
     x, y = pos[0] - IMAGE_POS[0], pos[1] - IMAGE_POS[1]
     if 0 <= x < ORIGIN_IMAGE_SIZE[0][0] and 0 <= y < ORIGIN_IMAGE_SIZE[0][1]:
         INTERACTIVE_POINT.append([x, y])
@@ -95,7 +97,9 @@ def get_interactive_point(screen, current_img, pos):
                                   CONTROL_POS[index][1] + int(shift_y.item())]
 
         contour = util.fit_b_spline_with_geomdl(CONTROL_POS.copy(), interpolate=True)
-        screen_draw.show_and_cal(screen, current_img, contour, CONTROL_POS.copy(), show_gt = False)
+        screen_draw.show_and_cal(screen, current_img, contour, CONTROL_POS.copy(), show_gt = True)
+
+
 
 
 def button5(screen):

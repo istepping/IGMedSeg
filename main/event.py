@@ -97,7 +97,7 @@ def get_interactive_point(screen, current_img, pos):
                                   CONTROL_POS[index][1] + int(shift_y.item())]
 
         contour = util.fit_b_spline_with_geomdl(CONTROL_POS.copy(), interpolate=True)
-        screen_draw.show_and_cal(screen, current_img, contour, CONTROL_POS.copy(), show_gt = True)
+        screen_draw.show_and_cal(screen, current_img, contour, CONTROL_POS.copy(), show_gt = False)
 
 
 
@@ -156,7 +156,7 @@ def modify(screen, pos, current_img):
     points.pop(SHIFT_INDEX[0])
     points.insert(SHIFT_INDEX[0], [x, y])
     contour = util.fit_b_spline_with_geomdl(points, interpolate=True)
-    screen_draw.show_and_cal(screen, current_img, contour, points)
+    screen_draw.show_and_cal(screen, current_img, contour, points,show_gt=False)
 
 
 def button6(screen, current_img):
